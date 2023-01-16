@@ -18,46 +18,31 @@ Below steps are performed individually for each repositories.
 
 NOTE : The below steps work fine for gcc (9.4.x above)compilers only. There are few inconsistencies with clang 14 version to build.
  - Clone repo
-             git clone --recurse-submodules git@github.com:NilFoundation/zkllvm.git
+             git clone git@github.com:NilFoundation/lorem-ipsum-cli.git
 
-             cd zkllvm    
+             cd lorem-ipsum-cli    
 
  - Configure CMake 
 
              cmake -G "Unix Makefiles" -B ${ZKLLVM_BUILD:-build} -DCMAKE_BUILD_TYPE=Release .
 
- - Build assigner in the Zkllvm repo and generate examples. Example of output from poseidon binary file is in input_dir_poseidon folder. 
+    Example of output for poseidon binary file is in input_dir_poseidon folder. 
 
-             make -C ${ZKLLVM_BUILD:-build} assigner -j$(nproc) 
+ - Execute below scripts from lorem-ipsum-cli directory to build for circuit_transpiler 
 
-             make -C ${ZKLLVM_BUILD:-build} assigner -j$(nproc)
-
-             make -C ${ZKLLVM_BUILD:-build} circuit_examples -j$(nproc)
-    
-    It will generate the binary files for certain schemes like arithmetics,poseidon for producing hash etc.
-
-            ${ZKLLVM_BUILD:-build}/bin/assigner/assigner -b ${ZKLLVM_BUILD:-build}/examples/poseidon_example.bc -i examples/poseidon.inp -t assignment_table.data -c circuit.bin 
-   
-   It will generate assignment table and circuit files. These files are stored in input_dir_poseidon folder to serve as input for generating gate argument via running scripts from prepare_external_gate_argument.
-
- - Clone repo to execute below scripts from prepare_external_gate_argument 
-
-            git clone --recurse-submodules git@github.com:NilFoundation/zkllvm.git
-            cd zkllvm 
-    
-            cmake -G "Unix Makefiles" -B ${ZKLLVM_BUILD:-build} -DCMAKE_BUILD_TYPE=Release .
+            make -C ${ZKLLVM_BUILD:-build} circuit_transpiler -j$(nproc)
 
    Input : input_dir_poseidon is considered as input.
 
    Output : output_dir_poseidon is the output folder.
 
-   prepare output of zkllvm for poseidon :   
+   Prepare output of zkllvm for poseidon :   
    
-               ./build/bin/prepare_external_gate_argument/prepare_external_gate_argument gen_gate_argument input_dir_poseidon output_dir_poseidon
+               ./build/bin/circuit_transpiler/circuit_transpiler gen_gate_argument input_dir_poseidon output_dir_poseidon
 
-   build test proof :   
+   Build test proof :   
    
-              ./build/bin/prepare_external_gate_argument/prepare_external_gate_argument gen_test_proof input_dir_poseidon output_dir_poseidon 
+              ./build/bin/circuit_transpiler/circuit_transpiler gen_test_proof input_dir_poseidon output_dir_poseidon 
 
  - Deploy and test the output of prepare_external_gate_argument to EVM-placeholder-verification
     - Copy the output_dir_poseidon folder from the above execution and paste inside evm-placeholder-verification directory.
