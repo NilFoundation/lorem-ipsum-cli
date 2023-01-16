@@ -5,7 +5,7 @@
 This repository serves as a PoC of Lorem Ipsum data transfer protocol.
 
 # In-Progress
-Integration with assigner,prepare_external_gate_argument and EVM-placeholder-verification is still in progress. 
+Integration with circuit_transpiler(to prepare gate argument) and EVM-placeholder-verification is still in progress. 
 Below steps are performed individually for each repositories.
 
 # Dependencies used
@@ -30,7 +30,9 @@ NOTE : The below steps work fine for gcc (9.4.x above)compilers only. There are 
 
              make -C ${ZKLLVM_BUILD:-build} assigner -j$(nproc) 
 
-             make -C ${ZKLLVM_BUILD:-build} circuit_examples -j$(nproc)
+    make -C ${ZKLLVM_BUILD:-build} assigner -j$(nproc)
+
+    make -C ${ZKLLVM_BUILD:-build} circuit_examples -j$(nproc)
     
     It will generate the binary files for certain schemes like arithmetics,poseidon for producing hash etc.
 

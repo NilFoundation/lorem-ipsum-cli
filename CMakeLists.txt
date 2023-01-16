@@ -17,6 +17,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake"
      "${CMAKE_CURRENT_LIST_DIR}/cmake/packages"
      "${CMAKE_CURRENT_LIST_DIR}/cmake/modules/share/modules/cmake")
 
+message("${CMAKE_CURRENT_LIST_DIR}")     
 include(CMConfig)
 include(CMSetupVersion)
 
@@ -64,13 +65,11 @@ endif()
 
 add_subdirectories("${CMAKE_CURRENT_LIST_DIR}/libs/crypto3")
 add_subdirectories("${CMAKE_CURRENT_LIST_DIR}/libs/crypto3/marshalling")
+# add_subdirectories("${CMAKE_CURRENT_LIST_DIR}/libs/evm-placeholder-verification")
 
 add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/libs/blueprint")
-add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/libs/assigner")
+add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/libs/transpiler")
 
 add_subdirectories("${CMAKE_CURRENT_LIST_DIR}/bin")
 
-set(LLVM_ENABLE_PROJECTS "clang" CACHE STRING "Additional llvm projects")
-add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/libs/circifier/llvm")
-
-add_subdirectory(examples)
+# add_subdirectory(examples)
