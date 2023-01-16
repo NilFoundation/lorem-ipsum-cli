@@ -30,9 +30,9 @@ NOTE : The below steps work fine for gcc (9.4.x above)compilers only. There are 
 
              make -C ${ZKLLVM_BUILD:-build} assigner -j$(nproc) 
 
-    make -C ${ZKLLVM_BUILD:-build} assigner -j$(nproc)
+             make -C ${ZKLLVM_BUILD:-build} assigner -j$(nproc)
 
-    make -C ${ZKLLVM_BUILD:-build} circuit_examples -j$(nproc)
+             make -C ${ZKLLVM_BUILD:-build} circuit_examples -j$(nproc)
     
     It will generate the binary files for certain schemes like arithmetics,poseidon for producing hash etc.
 
