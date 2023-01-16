@@ -18,6 +18,7 @@ Below steps are performed individually for each repositories.
 
 NOTE : The below steps work fine for gcc (9.4.x above)compilers only. There are few inconsistencies with clang 14 version to build.
  - Clone repo
+ 
              git clone git@github.com:NilFoundation/lorem-ipsum-cli.git
 
              cd lorem-ipsum-cli    
