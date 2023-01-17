@@ -18,7 +18,7 @@ Below steps are performed individually for each repositories.
 
 NOTE : The below steps work fine for gcc (9.4.x above)compilers only. There are few inconsistencies with clang 14 version to build.
  - Clone repo
- 
+
              git clone git@github.com:NilFoundation/lorem-ipsum-cli.git
 
              cd lorem-ipsum-cli    
@@ -45,17 +45,17 @@ NOTE : The below steps work fine for gcc (9.4.x above)compilers only. There are 
    
               ./build/bin/circuit_transpiler/circuit_transpiler gen_test_proof input_dir_poseidon output_dir_poseidon 
 
- - Deploy and test the output of prepare_external_gate_argument to EVM-placeholder-verification
-    - Copy the output_dir_poseidon folder from the above execution and paste inside evm-placeholder-verification directory.
-    - Execute python scripts in the 18 Branch of evm-placeholder-verification repo. 
+ - Deploy and test the output of circuit_transpiler (gate argument) to EVM-placeholder-verification
+    - Execute copy_poseidon_proof.py from lorem-ipsum cli.
+    - Execute python scripts in the libs/evm-placeholder-verification/test directory. 
         1. Deploy the gate arguments using the script :  
         
-                   python3 ./web3_deploy_gate_argument.py output_dir_poseidon 
+                   python3 ./web3_deploy_gate_argument.py poseidon_proof 
         This will generate the addr file inside output_dir_poseidon folder which is used to check the address for deployment.
 
         2. Verify the Proof :     
         
-                      python3 ./web3_placeholder_universal_test.py output_dir_poseidon
+                      python3 ./web3_placeholder_universal_test.py poseidon_proof
         In the output, it will generate a proof's hash and verifiable address. 
         It is similar to the deployed address. Hence, proof verified for deployment on EVM.
     

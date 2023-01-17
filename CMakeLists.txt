@@ -65,7 +65,7 @@ endif()
 
 add_subdirectories("${CMAKE_CURRENT_LIST_DIR}/libs/crypto3")
 add_subdirectories("${CMAKE_CURRENT_LIST_DIR}/libs/crypto3/marshalling")
-# add_subdirectories("${CMAKE_CURRENT_LIST_DIR}/libs/evm-placeholder-verification")
+add_subdirectories("${CMAKE_CURRENT_LIST_DIR}/libs/evm-placeholder-verification")
 
 add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/libs/blueprint")
 add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/libs/transpiler")

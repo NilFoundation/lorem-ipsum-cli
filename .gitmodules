@@ -64,3 +64,6 @@
 [submodule "libs/transpiler"]
 	path = libs/transpiler
 	url = https://github.com/NilFoundation/zkllvm-transpiler.git
+[submodule "libs/evm-placeholder-verification"]
+	path = libs/evm-placeholder-verification
+	url = https://github.com/NilFoundation/evm-placeholder-verification.git
