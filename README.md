@@ -23,6 +23,24 @@ On *nix systems, the following dependencies need to be present & can be installe
 ```
 **We are aware of a compilation issue with boost libs having version higher than 1.76. Please use version 1.76.**
 
+# Usage
+
+## Get Mina ledger state proof
+
+Mina's ledger state can be retrieved by querying the RPC endpoint exposed by a Mina node
+```
+python3 scripts/protocol/mina/get_mina_state.py --url=<rpc_endpoint> --output=<file_location>
+```
+Parameters:
+- url : RPC endpoint of the node
+- output : Location to store the state
+
+ex:
+```
+python3 scripts/protocol/mina/get_mina_state.py --url=http://23.88.106.255:3086/ --output=/home/user/mina-state-proof/out/minastate.json
+```
+
+
 
 # Common issues
 
