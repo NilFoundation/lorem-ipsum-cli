@@ -14,7 +14,7 @@ proofs on blockchain VMs. Users are recommended to check the proof market toolch
 
 - [Boost](https://www.boost.org/) == 1.76.0
 - [cmake](https://cmake.org/) >= 3.5
-- [clang](https://clang.llvm.org/) >= 14.0.6
+- [clang](https://clang.llvm.org/) == 12.0.0
 
 On *nix systems, the following dependencies need to be present & can be installed using the following command
 
@@ -27,19 +27,35 @@ On *nix systems, the following dependencies need to be present & can be installe
 
 ## Get Mina ledger state proof
 
-Mina's ledger state can be retrieved by querying the RPC endpoint exposed by a Mina node
+Mina's ledger state can be retrieved as follows:
 ```
-python3 scripts/protocol/mina/get_mina_state.py --url=<rpc_endpoint> --output=<file_location>
+python3 scripts/protocol/mina/get_mina_state.py --type ledger --url=<rpc_endpoint> --output=<file_location>
 ```
 Parameters:
-- url : RPC endpoint of the node
+- url : GraphQL endpoint of the node
 - output : Location to store the state
+- type  : query type, ledger for requesting full ledger proof
 
 ex:
 ```
-python3 scripts/protocol/mina/get_mina_state.py --url=http://23.88.106.255:3086/ --output=/home/user/mina-state-proof/out/minastate.json
+python3 scripts/protocol/mina/get_mina_state.py  --type ledger --url=http://23.88.106.255:3086/ --output=/home/user/mina-state-proof/out/minastate.json
 ```
 
+## Get Mina account state
+
+Account state in MINA (user account or zkApp state) can be retrieved as follows:
+
+```
+python scripts/protocol/mina/get_mina_state.py --type account --url=<rpc_endpoint> --address=<user/zkapp public key> --output=<file_location>
+```
+- url : GraphQL endpoint of the node
+- output : Location to store the state
+- type  : query type, account for requesting user balances/zkApp state
+
+ex:
+```
+python scripts/protocol/mina/get_mina_state.py --type account --url https://proxy.berkeley.minaexplorer.com/ --address B62qp64bbYKBnSuNa7yHHu7UpqPivao9TWwrH11Bs5gT1DPRXvwHRuY --output=/home/user/mina-state-proof/out/mina_account_state.json
+```
 
 
 # Common issues
