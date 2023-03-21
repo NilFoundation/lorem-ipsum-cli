@@ -4,7 +4,7 @@ import sys
 import argparse
 
 
-def get_mina_ledger_state(url):
+def get_mina_ledger_state(args):
     query = """
     query MyQuery {
     blockchainVerificationKey
@@ -57,15 +57,23 @@ def get_mina_ledger_state(url):
     }
     }
     """
-    request_res = requests.post(url, json={"query": query}).json()
+    request_res = requests.post(args.url, json={"query": query}).json()
     protocol_state = request_res["data"]["bestChain"][0]
     request_res["data"]["bestChain"] = [protocol_state]
     print("Fetching data for block height: {}".format(protocol_state["protocolState"]["consensusState"]["blockHeight"]))
     print("Hash: {}".format(protocol_state["protocolState"]["blockchainState"]["snarkedLedgerHash"]))
-    return request_res
+    write_output_file(request_res, args.output)
+    return
 
 
-def get_mina_account_state(url, address):
+
+def write_output_file(data, output_path):
+    with open(output_path, 'w') as f:
+        sys.stdout = f
+        print(json.dumps(data, indent=4))
+
+
+def get_mina_account_state(args):
     query = '''
     query {{
       account(publicKey: "{0}" ) {{
@@ -84,9 +92,10 @@ def get_mina_account_state(url, address):
         }}
       }}
     }}
-    '''.format(address)
-    request_res = requests.post(url, json={"query": query}).json()
-    return request_res
+    '''.format(args.address)
+    request_res = requests.post(args.url, json={"query": query}).json()
+    write_output_file(request_res,args.output)
+    return
 
 
 if __name__ == "__main__":
@@ -95,27 +104,15 @@ if __name__ == "__main__":
         description='Mina Helper retrieves data related to Proof Market functionality from Mina node')
     parser.add_argument('--url', help="GraphQL URL", default="https://proxy.berkeley.minaexplorer.com/")
     parser.add_argument('--output', help="Output file path", default="output.json")
-    parser.add_argument('--address', help="Mina public key of zkApp or user", default="")
-    parser.add_argument('--type', help="Query type: ledger or account", default="")
+
+    subparsers = parser.add_subparsers(help="sub-command help")
+    parser_ledger = subparsers.add_parser("ledger", help="Fetch mina ledger state")
+    parser_ledger.set_defaults(func=get_mina_ledger_state)
+
+    parser_account = subparsers.add_parser("account", help="Fetch mina zkApp/user state")
+    parser_account.add_argument('--address', help="Mina public key of zkApp or user", default="", required=True)
+    parser_account.set_defaults(func=get_mina_account_state)
 
     args = parser.parse_args()
-    url = args.url
-    output_path = args.output
-    address = args.address
-    query_type = args.type
-    res = ""
+    args.func(args)
 
-    if query_type == "ledger":
-        res = get_mina_ledger_state(url)
-    elif query_type == "account":
-        if address == "":
-            print("Missing --address flag")
-            exit(-1)
-        res = get_mina_account_state(url, address)
-    else:
-        print("Missing query type argument --type")
-        exit(-1)
-
-    with open(output_path, 'w') as f:
-        sys.stdout = f  # Change the standard output to the file we created.
-        print(json.dumps(res, indent=4))
